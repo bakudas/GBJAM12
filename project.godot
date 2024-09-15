@@ -21,7 +21,3 @@ window/size/viewport_width=480
 window/size/viewport_height=432
 window/stretch/scale=3.0
 window/stretch/scale_mode="integer"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/godot-sqlite/plugin.cfg", "res://addons/net.yarvis.pixel_pen/plugin.cfg")

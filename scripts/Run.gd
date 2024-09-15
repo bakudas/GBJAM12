@@ -1,10 +1,10 @@
 extends State
 
-
 func exec() -> void:
-	$"../../label_state".text = "Run"
 	player.velocity.x = player.direction * player.SPEED
-	$"../../anim".play("run")
+	if player.is_on_floor():
+		$"../../label_state".text = "Run"
+		$"../../anim".play("run")
 
 
 func get_player(_player):

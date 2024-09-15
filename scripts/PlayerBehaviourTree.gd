@@ -31,10 +31,10 @@ func _physics_process(delta):
 	
 	match state:
 		PLAYER_STATES.IDLE:
-			
 			# Handle jump.
 			if Input.is_action_just_pressed("ui_accept"):
 				player.velocity.y = player.JUMP_VELOCITY
+				state = PLAYER_STATES.JUMP
 				$"../label_state".text = "Jump"
 				$"../anim".play("jump")
 				print("JUMP")
@@ -44,11 +44,21 @@ func _physics_process(delta):
 				$"../anim".play("jump")
 			elif player.is_on_floor():
 				$Idle.exec()
-			pass
-		
+
 		PLAYER_STATES.RUN:
-			$Run.exec()
-			pass
+			# Handle jump.
+			if Input.is_action_just_pressed("ui_accept"):
+				player.velocity.y = player.JUMP_VELOCITY
+				state = PLAYER_STATES.JUMP
+				$"../label_state".text = "Jump"
+				$"../anim".play("jump")
+				print("JUMP")
+			elif player.velocity.y > 0:
+				state = PLAYER_STATES.FALL
+				$"../label_state".text = "Fall"
+				$"../anim".play("jump")
+			elif player.is_on_floor():
+				$Run.exec()
 		
 		PLAYER_STATES.JUMP:
 			$Jump.exec()
