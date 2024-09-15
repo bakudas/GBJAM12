@@ -20,9 +20,6 @@ font_size = 10
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m7ume"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_fn6q6"]
-radius = 15.0
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_m7lly"]
 atlas = ExtResource("9_rx1ha")
 region = Rect2(0, 0, 48, 30)
@@ -151,7 +148,10 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="player" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_fn6q6"]
+radius = 15.0
+
+[node name="player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_qw6nv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -196,20 +196,22 @@ collision_mask = 32
 shape = SubResource("RectangleShape2D_m7ume")
 debug_color = Color(0, 0.637131, 0.396068, 0.42)
 
-[node name="attack_collider" type="Area2D" parent="."]
-position = Vector2(12, 2)
-collision_layer = 0
-collision_mask = 32
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="attack_collider"]
-shape = SubResource("CircleShape2D_fn6q6")
-debug_color = Color(0.974621, 0.155203, 0.083399, 0.42)
-
 [node name="anim" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_e8n1e")
 animation = &"attack"
 autoplay = "idle"
 frame = 1
+
+[node name="attack_collider" type="Area2D" parent="anim"]
+position = Vector2(12, 2)
+collision_layer = 2
+collision_mask = 2
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="anim/attack_collider"]
+shape = SubResource("CircleShape2D_fn6q6")
+disabled = true
+debug_color = Color(0.974621, 0.155203, 0.083399, 0.42)
 
 [node name="Timer" type="Timer" parent="."]
 
@@ -220,4 +222,4 @@ frame = 1
 [connection signal="start" from="." to="PlayerBehaviourTree/Fall" method="get_player"]
 [connection signal="start" from="." to="InputHandler" method="get_player"]
 [connection signal="body_shape_entered" from="ladder_collider" to="." method="_on_area_2d_body_shape_entered"]
-[connection signal="body_shape_entered" from="attack_collider" to="." method="_on_area_2d_body_shape_entered"]
+[connection signal="body_shape_entered" from="anim/attack_collider" to="." method="_on_area_2d_body_shape_entered"]

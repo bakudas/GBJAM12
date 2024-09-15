@@ -39,8 +39,10 @@ func _process(delta):
 				$"../anim".play("attack")
 				player.is_attacking = true
 				can_attack = false
+				$"..//anim/attack_collider/CollisionShape2D".disabled = false
 				await get_tree().create_timer(attack_cooldown).timeout
 				player.is_attacking = false
+				$"..//anim/attack_collider/CollisionShape2D".disabled = true
 				can_attack = true
 			# RUN
 			elif player.direction and !player.is_jumping and !player.is_attacking:
@@ -59,8 +61,10 @@ func _process(delta):
 				$"../anim".play("attack")
 				player.is_attacking = true
 				can_attack = false
+				$"../anim/attack_collider/CollisionShape2D".disabled = false
 				await get_tree().create_timer(attack_cooldown).timeout
 				player.is_attacking = false
+				$"..//anim/attack_collider/CollisionShape2D".disabled = true
 				can_attack = true
 			# JUMP
 			elif player.is_jumping:

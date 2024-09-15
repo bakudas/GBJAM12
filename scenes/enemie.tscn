@@ -1,0 +1,70 @@
+[gd_scene load_steps=9 format=3 uid="uid://ckq456hijsq6s"]
+
+[ext_resource type="Texture2D" uid="uid://ctc5gs7537l8o" path="res://texturas/enemy_big_eye.png" id="1_1i43w"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_630ur"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8obou"]
+atlas = ExtResource("1_1i43w")
+region = Rect2(60, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2m6vm"]
+atlas = ExtResource("1_1i43w")
+region = Rect2(90, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8afb"]
+atlas = ExtResource("1_1i43w")
+region = Rect2(120, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_di322"]
+atlas = ExtResource("1_1i43w")
+region = Rect2(0, 0, 30, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lyv3i"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_8obou")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2m6vm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o8afb")
+}],
+"loop": false,
+"name": &"death",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_di322")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y8srq"]
+
+[node name="Enemie" type="Node2D" groups=["enemies"]]
+script = ExtResource("1_630ur")
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatableBody2D"]
+sprite_frames = SubResource("SpriteFrames_lyv3i")
+animation = &"idle"
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="AnimatableBody2D"]
+shape = SubResource("CircleShape2D_y8srq")
+
+[node name="hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("CircleShape2D_y8srq")
+
+[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
