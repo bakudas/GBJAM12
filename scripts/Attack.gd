@@ -2,8 +2,8 @@ extends State
 
 
 func exec() -> void:
-	$"../../anim".play("jump")
-	$"../../label_state".text = "Jump"
+	$"../../label_state".text = "Attack"
+	$"../../anim".play("attack")
 
 
 func get_player(_player):

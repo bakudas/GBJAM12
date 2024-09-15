@@ -1,13 +1,35 @@
-[gd_scene load_steps=25 format=3 uid="uid://o3fb7qjq66jl"]
+[gd_scene load_steps=31 format=3 uid="uid://o3fb7qjq66jl"]
 
-[ext_resource type="Script" path="res://scenes/player.gd" id="1_qw6nv"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_qw6nv"]
 [ext_resource type="Texture2D" uid="uid://bn1st08sb56jf" path="res://texturas/npc.png" id="2_w3rss"]
 [ext_resource type="Script" path="res://scripts/PlayerBehaviourTree.gd" id="3_llqwf"]
 [ext_resource type="Script" path="res://scripts/Idle.gd" id="4_t6p0e"]
 [ext_resource type="Script" path="res://scripts/Run.gd" id="5_lfwcd"]
 [ext_resource type="Script" path="res://scripts/Jump.gd" id="6_slesn"]
 [ext_resource type="Script" path="res://scripts/Fall.gd" id="7_lyqy7"]
+[ext_resource type="Script" path="res://scripts/Attack.gd" id="7_vejmk"]
 [ext_resource type="Script" path="res://scripts/InputHandler.gd" id="8_srcfd"]
+[ext_resource type="Texture2D" uid="uid://b6yacmnxo50bn" path="res://texturas/npc-attack.png" id="9_rx1ha"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_628cl"]
+radius = 6.0
+height = 28.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_cb0jl"]
+font_size = 10
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m7ume"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fn6q6"]
+radius = 15.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7lly"]
+atlas = ExtResource("9_rx1ha")
+region = Rect2(0, 0, 48, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75oi0"]
+atlas = ExtResource("9_rx1ha")
+region = Rect2(48, 0, 48, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j3ho8"]
 atlas = ExtResource("2_w3rss")
@@ -65,6 +87,17 @@ region = Rect2(308, 0, 22, 30)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_m7lly")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_75oi0")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_j3ho8")
 }, {
 "duration": 1.0,
@@ -118,20 +151,8 @@ animations = [{
 "speed": 12.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_628cl"]
-radius = 6.0
-height = 28.0
-
-[sub_resource type="LabelSettings" id="LabelSettings_cb0jl"]
-font_size = 10
-
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_qw6nv")
-
-[node name="anim" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.801, 1)
-sprite_frames = SubResource("SpriteFrames_e8n1e")
-animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_628cl")
@@ -151,6 +172,9 @@ script = ExtResource("6_slesn")
 [node name="Fall" type="Node" parent="PlayerBehaviourTree"]
 script = ExtResource("7_lyqy7")
 
+[node name="Attack" type="Node" parent="PlayerBehaviourTree"]
+script = ExtResource("7_vejmk")
+
 [node name="InputHandler" type="Node" parent="."]
 script = ExtResource("8_srcfd")
 
@@ -164,9 +188,36 @@ label_settings = SubResource("LabelSettings_cb0jl")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ladder_collider" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ladder_collider"]
+shape = SubResource("RectangleShape2D_m7ume")
+debug_color = Color(0, 0.637131, 0.396068, 0.42)
+
+[node name="attack_collider" type="Area2D" parent="."]
+position = Vector2(12, 2)
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attack_collider"]
+shape = SubResource("CircleShape2D_fn6q6")
+debug_color = Color(0.974621, 0.155203, 0.083399, 0.42)
+
+[node name="anim" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_e8n1e")
+animation = &"attack"
+autoplay = "idle"
+frame = 1
+
+[node name="Timer" type="Timer" parent="."]
+
 [connection signal="start" from="." to="PlayerBehaviourTree" method="get_player"]
 [connection signal="start" from="." to="PlayerBehaviourTree/Idle" method="get_player"]
 [connection signal="start" from="." to="PlayerBehaviourTree/Run" method="get_player"]
 [connection signal="start" from="." to="PlayerBehaviourTree/Jump" method="get_player"]
 [connection signal="start" from="." to="PlayerBehaviourTree/Fall" method="get_player"]
 [connection signal="start" from="." to="InputHandler" method="get_player"]
+[connection signal="body_shape_entered" from="ladder_collider" to="." method="_on_area_2d_body_shape_entered"]
+[connection signal="body_shape_entered" from="attack_collider" to="." method="_on_area_2d_body_shape_entered"]

@@ -1,86 +1,110 @@
 extends Behaviour
 class_name BehaviourTree
 
-enum PLAYER_STATES { IDLE, RUN, JUMP, FALL }
+enum PLAYER_STATES { IDLE, RUN, JUMP, FALL, ATTACK, ESPECIAL }
 var state : PLAYER_STATES
 @onready var player = $".."
 @export var disable : bool = false
 @export var cur_state : Node
 @export var prev_behavior : Node
 @onready var NODE_STATES = get_children()
+var attack_cooldown:float = .25
+var can_attack:bool = true
 
 
 func _ready():
 	pass
 
-func _physics_process(delta):
-	# Add the gravity.
-	if not player.is_on_floor():
+func _process(delta):
+	# get axis input
+	player.direction = Input.get_axis("move_left", "move_right")
+	player.is_jumping = Input.is_action_just_pressed("jump")
+	player.attack = Input.is_action_just_pressed("attack")
+	
+	# MOVE
+	player.velocity.x = player.direction * player.SPEED * delta
+
+	# HANDLING INPUTS
+	# GROUND ACTIONS
+	if player.is_on_floor():
+		if player.direction:
+			# JUMP
+			if player.is_jumping:
+				player.velocity.y = player.JUMP_VELOCITY
+				state = PLAYER_STATES.JUMP
+			# ATTACK
+			elif player.attack and can_attack and !player.is_attacking:
+				state = PLAYER_STATES.ATTACK
+				$"../label_state".text = "Attack"
+				$"../anim".play("attack")
+				player.is_attacking = true
+				can_attack = false
+				await get_tree().create_timer(attack_cooldown).timeout
+				player.is_attacking = false
+				can_attack = true
+			# RUN
+			elif player.direction and !player.is_jumping and !player.is_attacking:
+				state = PLAYER_STATES.RUN
+				$"../anim".scale.x = player.direction
+		# IDLE
+		else:
+			# RUN
+			if player.direction and !player.is_jumping:
+				state = PLAYER_STATES.RUN
+				$"../anim".scale.x = player.direction
+			# ATTACK
+			elif player.attack and can_attack and !player.is_attacking:
+				state = PLAYER_STATES.ATTACK
+				$"../label_state".text = "Attack"
+				$"../anim".play("attack")
+				player.is_attacking = true
+				can_attack = false
+				await get_tree().create_timer(attack_cooldown).timeout
+				player.is_attacking = false
+				can_attack = true
+			# JUMP
+			elif player.is_jumping:
+				player.velocity.y = player.JUMP_VELOCITY
+				state = PLAYER_STATES.JUMP
+			else:
+				player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED)
+				
+				if not player.is_attacking:
+					state = PLAYER_STATES.IDLE
+	# AIR ACTIONS
+	else:
+		# Add the gravity.
 		player.velocity.y += player.gravity * delta
 	
-	if player.velocity.x == 0:
-		state = PLAYER_STATES.IDLE
-	
-	player.direction = Input.get_axis("ui_left", "ui_right")
-	
-	if player.direction:
-		state = PLAYER_STATES.RUN
-		$"../anim".scale.x = player.direction
-	else:
-		player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED)
+		# ATTACK
+		if player.attack and can_attack and !player.is_attacking:
+			state = PLAYER_STATES.ATTACK
+			$"../label_state".text = "Attack"
+			$"../anim".play("attack")
+			player.is_attacking = true
+			can_attack = false
+			await get_tree().create_timer(attack_cooldown).timeout
+			player.is_attacking = false
+			can_attack = true
+		elif player.velocity.y > 0 and !player.is_attacking:
+			state = PLAYER_STATES.FALL	
 	
 	match state:
 		PLAYER_STATES.IDLE:
-			# Handle jump.
-			if Input.is_action_just_pressed("ui_accept"):
-				player.velocity.y = player.JUMP_VELOCITY
-				state = PLAYER_STATES.JUMP
-				$"../label_state".text = "Jump"
-				$"../anim".play("jump")
-				print("JUMP")
-			elif player.velocity.y > 0:
-				state = PLAYER_STATES.FALL
-				$"../label_state".text = "Fall"
-				$"../anim".play("jump")
-			elif player.is_on_floor():
-				$Idle.exec()
-
+			$Idle.exec()
 		PLAYER_STATES.RUN:
-			# Handle jump.
-			if Input.is_action_just_pressed("ui_accept"):
-				player.velocity.y = player.JUMP_VELOCITY
-				state = PLAYER_STATES.JUMP
-				$"../label_state".text = "Jump"
-				$"../anim".play("jump")
-				print("JUMP")
-			elif player.velocity.y > 0:
-				state = PLAYER_STATES.FALL
-				$"../label_state".text = "Fall"
-				$"../anim".play("jump")
-			elif player.is_on_floor():
-				$Run.exec()
-		
-		PLAYER_STATES.JUMP:
+			$Run.exec()
+		PLAYER_STATES.ATTACK:
+			$Attack.exec()
+		PLAYER_STATES.JUMP when player.is_on_floor():
 			$Jump.exec()
-			pass
-		
-		PLAYER_STATES.FALL:
+		PLAYER_STATES.FALL when !player.is_on_floor():
 			$Fall.exec()
-			pass
 
 
 func change_behaviour(_state:PLAYER_STATES) -> void:
 	state = _state
 	prev_behavior = cur_state
-	#match state:
-		#PLAYER_STATES.IDLE:
-			#set_state($Idle)
-		#PLAYER_STATES.RUN:
-			#set_state($Run)
-		#PLAYER_STATES.JUMP:
-			#set_state($Jump)
-		#PLAYER_STATES.FALL:
-			#set_state($Fall)
 
 
 func set_state(state:Node) -> bool:
