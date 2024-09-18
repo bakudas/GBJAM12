@@ -22,18 +22,18 @@ region = Rect2(0, 0, 30, 31)
 [sub_resource type="SpriteFrames" id="SpriteFrames_lyv3i"]
 animations = [{
 "frames": [{
-"duration": 2.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_8obou")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_2m6vm")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_o8afb")
 }],
 "loop": false,
 "name": &"death",
-"speed": 9.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -48,6 +48,7 @@ animations = [{
 
 [node name="Enemie" type="Node2D" groups=["enemies"]]
 script = ExtResource("1_630ur")
+max_heath = 1.0
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
 collision_layer = 0
@@ -55,7 +56,8 @@ collision_mask = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatableBody2D"]
 sprite_frames = SubResource("SpriteFrames_lyv3i")
-animation = &"idle"
+animation = &"death"
+autoplay = "idle"
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="AnimatableBody2D"]
 shape = SubResource("CircleShape2D_y8srq")

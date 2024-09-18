@@ -1,0 +1,53 @@
+[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://c3ro0870piu12"]
+
+[ext_resource type="Texture2D" uid="uid://oypw52oku18q" path="res://texturas/cursed_bat_idle.png" id="1_pgb7f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cbbn4"]
+atlas = ExtResource("1_pgb7f")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lwqcw"]
+atlas = ExtResource("1_pgb7f")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_veeei"]
+atlas = ExtResource("1_pgb7f")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_18qn3"]
+atlas = ExtResource("1_pgb7f")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3itfj"]
+atlas = ExtResource("1_pgb7f")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgks6"]
+atlas = ExtResource("1_pgb7f")
+region = Rect2(160, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cbbn4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lwqcw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_veeei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_18qn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3itfj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hgks6")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 16.0
+}]

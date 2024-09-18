@@ -153,6 +153,7 @@ radius = 15.0
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_qw6nv")
+max_heath = 5.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_628cl")
@@ -188,7 +189,7 @@ label_settings = SubResource("LabelSettings_cb0jl")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ladder_collider" type="Area2D" parent="."]
+[node name="ladder_collider" type="Area2D" parent="." groups=["player"]]
 collision_layer = 0
 collision_mask = 32
 
