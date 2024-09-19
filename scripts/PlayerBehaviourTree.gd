@@ -65,11 +65,12 @@ func handle_idle_state():
 
 func handle_air_state(delta):
 	player.is_on_ground = false
+	
 	if player.coyote_time_counter > 0:
 		player.coyote_time_counter -= delta
 
-	# Apply gravity
-	player.velocity.y += player.gravity * delta
+	if !player.is_on_ladder: # Apply gravity
+		player.velocity.y += player.gravity * delta
 
 	if player.attack and can_attack and not player.is_attacking:
 		perform_attack()
@@ -88,6 +89,7 @@ func perform_attack():
 	player.is_attacking = false
 	$"../anim/attack_collider/CollisionShape2D".disabled = true
 	can_attack = true
+	$"../FmodBankLoader/FmodEventEmitter2D".play()
 
 func handle_state_actions():
 	match state:

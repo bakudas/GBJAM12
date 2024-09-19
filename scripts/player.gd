@@ -52,5 +52,17 @@ func receive_damage(amount:float=1):
 func _on_area_2d_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
 	if body.is_class("TileMapLayer"): 
 		var tile_coords = body.get_coords_for_body_rid(body_rid)
-		var tile_data = body.get_cell_tile_data(tile_coords).get_custom_data_by_layer_id(0)
-		is_on_ladder = tile_data
+		var is_on_ladder = body.get_cell_tile_data(tile_coords).get_custom_data_by_layer_id(0) # custom data layer #0
+		var is_death = body.get_cell_tile_data(tile_coords).get_custom_data_by_layer_id(1) # custom data layer #1
+		var is_on_one_way_platform = body.get_cell_tile_data(tile_coords).get_custom_data_by_layer_id(2) # custom data layer #1
+		
+		if is_death:
+			print("MOREU!")
+			get_tree().reload_current_scene()
+		elif is_on_ladder:
+			if Input.is_action_pressed("climb"):
+				is_on_ladder = true
+				velocity.y -= 10
+				print("VAI SOBE!")
+		elif is_on_one_way_platform:
+			print("VAI DESCe!")

@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckq456hijsq6s"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_630ur"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y8srq"]
+
+[node name="Enemy" type="Node2D" groups=["enemies"]]
+script = ExtResource("1_630ur")
+damage_power = 10.0
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatableBody2D"]
+animation = &""
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="AnimatableBody2D"]
+shape = SubResource("CircleShape2D_y8srq")
+
+[node name="hitbox" type="Area2D" parent="."]
+texture_filter = 1
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("CircleShape2D_y8srq")
+
+[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]

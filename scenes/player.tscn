@@ -152,6 +152,7 @@ animations = [{
 radius = 15.0
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
+texture_filter = 1
 script = ExtResource("1_qw6nv")
 max_heath = 5.0
 
@@ -180,6 +181,7 @@ script = ExtResource("7_vejmk")
 script = ExtResource("8_srcfd")
 
 [node name="label_state" type="Label" parent="."]
+visible = false
 offset_left = -24.0
 offset_top = -30.0
 offset_right = 24.0
@@ -199,9 +201,10 @@ debug_color = Color(0, 0.637131, 0.396068, 0.42)
 
 [node name="anim" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_e8n1e")
-animation = &"attack"
+animation = &"idle"
 autoplay = "idle"
 frame = 1
+frame_progress = 0.584491
 
 [node name="attack_collider" type="Area2D" parent="anim"]
 position = Vector2(12, 2)
@@ -215,6 +218,19 @@ disabled = true
 debug_color = Color(0.974621, 0.155203, 0.083399, 0.42)
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="FmodBankLoader" type="FmodBankLoader" parent="."]
+bank_paths = ["res://audio/Master.bank"]
+
+[node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="FmodBankLoader"]
+event_name = "event:/New Event"
+event_guid = "{238d3a72-448d-4b8a-ba84-a78aeb0b65f2}"
+"event_parameter/Parameter 1/id" = -3653676464301237023
+"event_parameter/Parameter 1/value" = 0.0
+"event_parameter/Parameter 1/min_value" = 0.0
+"event_parameter/Parameter 1/max_value" = 1.0
+"event_parameter/Parameter 1/default_value" = 0.0
+"event_parameter/Parameter 1/variant_type" = 3
 
 [connection signal="start" from="." to="PlayerBehaviourTree" method="get_player"]
 [connection signal="start" from="." to="PlayerBehaviourTree/Idle" method="get_player"]

@@ -1,3 +1,4 @@
+@tool
 extends Node2D
 class_name Enemy
 
@@ -13,6 +14,10 @@ signal damage_apply
 # ENUMS
 enum ENEMY_TYPE {BAT, BAT_BOMB, ZOMBIE, SKELETON, SKELETON_ARCHER, SPIKE_BOMB, BIG_EYE}
 enum DAMAGE_TYPE {NORMAL=0, FIRE, ELETRIC, SHADOW}
+enum MOVEMENT_TYE {SIN, HORIZONTAL, FLY, BULLET}
+enum STATES {IDLE=0, ATTACK, DEATH, HIT, PATROL}
+
+var enemy_state:STATES = STATES.IDLE
 
 # PROPERTIES
 @export_category("Basic Enemy Settings")
@@ -20,6 +25,7 @@ enum DAMAGE_TYPE {NORMAL=0, FIRE, ELETRIC, SHADOW}
 #@export var enemy_type:ENEMY_TYPE
 @export var damage_type:DAMAGE_TYPE
 @export_enum("Big Eye", "Cursed Bat", "Spike Bomb") var enemy_name: String = "Big Eye"
+@export var movement_type:MOVEMENT_TYE
 
 @export_group("Stats")
 @export_range(1.0, 10.0, 1.0) var max_heath:float
@@ -36,6 +42,7 @@ func _ready() -> void:
 	max_heath = EnemyData.Database[enemy_name].max_health
 	current_health = max_heath
 	damage_power = EnemyData.Database[enemy_name].damage_power
+	$AnimatableBody2D/AnimatedSprite2D.flip_h = EnemyData.Database[enemy_name].fliped
 	var sprite_frames = load(EnemyData.Database[enemy_name].sprite)
 	if sprite_frames != null:
 		$AnimatableBody2D/AnimatedSprite2D.sprite_frames = sprite_frames
@@ -47,9 +54,10 @@ func _process(delta):
 
 
 func _physics_process(delta: float) -> void:
-	if is_moving:
-		time += delta
-		position.y += sin(time * 3) * 1
+	#if is_moving:
+		#time += delta
+		#position.y += sin(time * 3) * 1
+	pass
 
 
 func _get_configuration_warnings():
@@ -79,13 +87,13 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	
 	if current_health <= 0:
 		is_moving = false
-		$AnimatableBody2D/AnimatedSprite2D.play("death")
+		enemy_state = STATES.DEATH
 		await get_tree().create_timer(.25).timeout
 		queue_free()
 	else:
-		$AnimatableBody2D/AnimatedSprite2D.play("hit")
-		await get_tree().create_timer(.15).timeout
-		$AnimatableBody2D/AnimatedSprite2D.play("idle")
+		enemy_state = STATES.HIT
+		await get_tree().create_timer(.25).timeout
+		enemy_state = STATES.IDLE
 
 
 func _on_hitbox_body_entered(body: Node2D) -> void:

@@ -17,12 +17,14 @@ class_name EnemyData
 const Database = {
 	"Big Eye": {
 		"sprite": "res://animations/enemy_big_eye_animations.tres",
-		"max_health": 2,
+		"max_health": 1,
 		"damage_power": 1,
+		"fliped": false
 	},
 	"Cursed Bat": {
 		"sprite": "res://animations/enemy_cursed_bat_animations.tres",
-		"max_health": 2,
+		"max_health": 1,
 		"damage_power": 1,
+		"fliped": true
 	},
 }

@@ -8,6 +8,24 @@
 
 config_version=5
 
+[Fmod]
+
+General/auto_initialize=true
+General/channel_count=1024
+General/is_live_update_enabled=true
+General/is_memory_tracking_enabled=false
+"Software Format/sample_rate"=48000
+"Software Format/speaker_mode"=3
+"Software Format/raw_speaker_count"=0
+General/default_listener_count=1
+General/banks_path="res://audio"
+General/should_load_by_name=false
+DSP/dsp_buffer_size=512
+DSP/dsp_buffer_count=4
+"3D Settings/doppler_scale"=1.0
+"3D Settings/distance_factor"=32.0
+"3D Settings/rolloff_scale"=1.0
+
 [application]
 
 config/name="GBJAM12"
@@ -18,14 +36,21 @@ config/icon="res://icon.svg"
 [autoload]
 
 Interface="*res://scripts/Interface.gd"
+FmodManager="*res://addons/fmod/FmodManager.gd"
 
 [display]
 
 window/size/viewport_width=960
 window/size/viewport_height=864
 window/stretch/mode="viewport"
-window/stretch/scale=6.0
+window/stretch/scale=5.0
 window/stretch/scale_mode="integer"
+window/per_pixel_transparency/allowed=true
+window/vsync/vsync_mode=0
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/fmod/plugin.cfg")
 
 [global_group]
 
@@ -72,5 +97,6 @@ move_left={
 
 [rendering]
 
+camera/depth_of_field/depth_of_field_bokeh_shape=0
 anti_aliasing/screen_space_roughness_limiter/enabled=false
 2d/snap/snap_2d_transforms_to_pixel=true
