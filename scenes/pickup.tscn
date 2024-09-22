@@ -1,0 +1,94 @@
+[gd_scene load_steps=13 format=3 uid="uid://bxgpj37mi0lsl"]
+
+[ext_resource type="Script" path="res://scripts/pickup.gd" id="1_jrbc1"]
+[ext_resource type="Texture2D" uid="uid://2ro27e4ybvib" path="res://texturas/pickup_life.png" id="1_pttlw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fv1m5"]
+atlas = ExtResource("1_pttlw")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hve85"]
+atlas = ExtResource("1_pttlw")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2thms"]
+atlas = ExtResource("1_pttlw")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7jh52"]
+atlas = ExtResource("1_pttlw")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4ffd"]
+atlas = ExtResource("1_pttlw")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jqxts"]
+atlas = ExtResource("1_pttlw")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cfsb3"]
+atlas = ExtResource("1_pttlw")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_slqvg"]
+atlas = ExtResource("1_pttlw")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6g4ik"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fv1m5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hve85")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2thms")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7jh52")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r4ffd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqxts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cfsb3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_slqvg")
+}],
+"loop": true,
+"name": &"interact",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7v1ss"]
+
+[node name="Pickup" type="Node2D" groups=["pickup"]]
+script = ExtResource("1_jrbc1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -1)
+sprite_frames = SubResource("SpriteFrames_6g4ik")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.248619
+
+[node name="hitbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("CircleShape2D_7v1ss")
+
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]

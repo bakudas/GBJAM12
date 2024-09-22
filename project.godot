@@ -59,6 +59,7 @@ enabled=PackedStringArray("res://addons/fmod/plugin.cfg")
 
 player=""
 enemies=""
+pickup=""
 
 [input]
 
@@ -104,6 +105,7 @@ move_left={
 2d_physics/layer_2="enemies"
 2d_physics/layer_3="level"
 2d_physics/layer_4="props"
+2d_physics/layer_5="pickups"
 2d_physics/layer_6="custom_data"
 2d_physics/layer_9="invisible_wall"
 

@@ -32,7 +32,7 @@ script = ExtResource("2_1cytr")
 sprite_frames = ExtResource("3_aici0")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.551284
+frame_progress = 0.0684558
 
 [node name="RayCast2D" type="RayCast2D" parent="AnimatedSprite2D"]
 target_position = Vector2(-90, 0)

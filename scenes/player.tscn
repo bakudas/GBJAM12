@@ -26,12 +26,12 @@ radius = 15.0
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 texture_filter = 1
-collision_mask = 7
+collision_mask = 15
 floor_stop_on_slope = false
 script = ExtResource("1_qw6nv")
-max_heath = 5.0
+max_heath = 12.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
 shape = SubResource("CapsuleShape2D_628cl")
 
 [node name="PlayerBehaviourTree" type="Node" parent="."]
@@ -70,8 +70,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ladder_collider" type="Area2D" parent="." groups=["player"]]
-collision_layer = 32
-collision_mask = 32
+collision_layer = 48
+collision_mask = 48
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ladder_collider"]
 position = Vector2(-0.5, 0)
@@ -116,5 +116,6 @@ preload_event = false
 [connection signal="start" from="." to="PlayerBehaviourTree/Jump" method="get_player"]
 [connection signal="start" from="." to="PlayerBehaviourTree/Fall" method="get_player"]
 [connection signal="start" from="." to="InputHandler" method="get_player"]
+[connection signal="area_entered" from="ladder_collider" to="." method="_on_ladder_collider_area_entered"]
 [connection signal="body_shape_entered" from="ladder_collider" to="." method="_on_area_2d_body_shape_entered"]
 [connection signal="body_shape_entered" from="anim/attack_collider" to="." method="_on_area_2d_body_shape_entered"]

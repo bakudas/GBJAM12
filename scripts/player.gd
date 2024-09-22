@@ -21,7 +21,7 @@ var is_hitting:bool = false
 var is_on_ground:bool = false
 
 @export_group("Stats")
-@export_range(1.0, 10.0, 1.0) var max_heath:float
+@export_range(1.0, 12.0, 1.0) var max_heath:float
 @export_range(10.0, 100.0, 1.0) var damage_power:float
 
 # PRIVATE
@@ -55,6 +55,11 @@ func receive_damage(amount:float=1):
 	is_hitting = true
 
 
+func recovery_health(amount:float=1):
+	current_health = clamp(current_health + amount, 0, max_heath)
+	print(current_health)
+
+
 func knockback():
 	pass
 
@@ -76,3 +81,10 @@ func _on_area_2d_body_shape_entered(body_rid: RID, body: Node2D, body_shape_inde
 				print("VAI SOBE!")
 		elif is_on_one_way_platform:
 			print("VAI DESCe!")
+
+
+func _on_ladder_collider_area_entered(area: Area2D) -> void:
+	
+	if area.get_parent().has_method("destroy"):
+		area.get_parent().destroy()
+	recovery_health(1)

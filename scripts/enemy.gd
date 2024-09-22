@@ -27,7 +27,7 @@ enum STATES {IDLE=0, ATTACK, DEATH, HIT, PATROL}
 @export var movement_type:MOVEMENT_TYE
 
 @export_group("Stats")
-@export_range(1.0, 10.0, 1.0) var max_heath:float
+@export_range(1.0, 10.0, 1.0) var max_heath:float = 12
 @export_range(10.0, 100.0, 1.0) var damage_power:float
 
 
