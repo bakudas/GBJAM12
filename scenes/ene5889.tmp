@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://ckq456hijsq6s"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_630ur"]
+[ext_resource type="Script" path="res://scripts/enemy_behaviour_tree.gd" id="2_1cytr"]
+[ext_resource type="SpriteFrames" uid="uid://dmclt06slc6er" path="res://animations/enemy_big_eye_animations.tres" id="2_nkcvq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y8srq"]
+
+[node name="Enemy" type="CharacterBody2D" groups=["enemies"]]
+texture_filter = 1
+collision_layer = 0
+collision_mask = 3
+velocity = Vector2(0, 1.45902e+06)
+floor_block_on_wall = false
+platform_on_leave = 2
+script = ExtResource("1_630ur")
+max_heath = 1.0
+damage_power = 1.0
+
+[node name="BehaviourTree" type="Node" parent="."]
+script = ExtResource("2_1cytr")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_y8srq")
+disabled = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_nkcvq")
+animation = &"idle"
+frame_progress = 0.224365
+
+[node name="RayCast2D" type="RayCast2D" parent="AnimatedSprite2D"]
+target_position = Vector2(-90, 0)
+
+[node name="hitbox" type="Area2D" parent="."]
+texture_filter = 1
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("CircleShape2D_y8srq")
+
+[node name="DirectionTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_timer_timeout"]

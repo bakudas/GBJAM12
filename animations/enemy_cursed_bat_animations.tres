@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=28 format=3 uid="uid://c3ro0870piu12"]
+[gd_resource type="SpriteFrames" load_steps=34 format=3 uid="uid://c3ro0870piu12"]
 
 [ext_resource type="Texture2D" uid="uid://oypw52oku18q" path="res://texturas/cursed_bat_idle.png" id="1_pgb7f"]
 [ext_resource type="Texture2D" uid="uid://catbbsk10ryl" path="res://texturas/cursed_bat_attack.png" id="1_y8dup"]
@@ -97,6 +97,30 @@ region = Rect2(128, 0, 32, 32)
 atlas = ExtResource("1_pgb7f")
 region = Rect2(160, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_85yyd"]
+atlas = ExtResource("1_pgb7f")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ahlo0"]
+atlas = ExtResource("1_pgb7f")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5bsni"]
+atlas = ExtResource("1_pgb7f")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7hbb"]
+atlas = ExtResource("1_pgb7f")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmfw8"]
+atlas = ExtResource("1_pgb7f")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wil5g"]
+atlas = ExtResource("1_pgb7f")
+region = Rect2(160, 0, 32, 32)
+
 [resource]
 animations = [{
 "frames": [{
@@ -190,4 +214,27 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85yyd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahlo0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5bsni")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m7hbb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mmfw8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wil5g")
+}],
+"loop": true,
+"name": &"patrol",
+"speed": 5.0
 }]

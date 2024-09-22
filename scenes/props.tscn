@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3 uid="uid://cfrxhdbbd14tp"]
+
+[ext_resource type="Script" path="res://scripts/props.gd" id="1_ytd14"]
+[ext_resource type="SpriteFrames" uid="uid://crilj18ll6tct" path="res://animations/big_pot.tres" id="2_hnlre"]
+[ext_resource type="Texture2D" uid="uid://d1ddmx1nfnt0g" path="res://texturas/MediumPot.png" id="3_iyqjt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_egrxg"]
+size = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_ep5qe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_jpody"]
+resource_name = "hit"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sup5s"]
+_data = {
+"RESET": SubResource("Animation_ep5qe"),
+"hit": SubResource("Animation_jpody")
+}
+
+[node name="Props" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_ytd14")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_hnlre")
+animation = &"idle"
+frame_progress = 0.13828
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_egrxg")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_sup5s")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_iyqjt")
+hframes = 6
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

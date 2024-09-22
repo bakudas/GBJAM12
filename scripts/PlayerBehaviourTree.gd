@@ -2,12 +2,8 @@ extends Behaviour
 class_name BehaviourTree
 
 # FIELDS
-enum PLAYER_STATES { IDLE, RUN, JUMP, FALL, ATTACK, ESPECIAL }
-var state : PLAYER_STATES = PLAYER_STATES.IDLE
 @onready var player = $".."
 @export var disable : bool = false
-@export var cur_state : Node
-@export var prev_behavior : Node
 @onready var NODE_STATES = get_children()
 var attack_cooldown: float = 0.20
 var can_attack: bool = true
@@ -33,7 +29,7 @@ func update_player_state(delta):
 	# Handle Jump
 	if player.jump_pressed and (player.is_on_floor() or player.coyote_time_counter > 0):
 		player.is_jumping = true
-		set_state(PLAYER_STATES.JUMP)
+		change_behaviour(player.PLAYER_STATES.JUMP)
 		$"../anim".play("jump")
 		$"../label_state".text = "Jump"
 		player.jump_pressed = false
@@ -50,18 +46,24 @@ func handle_ground_state():
 	player.is_on_ground = true
 	player.coyote_time_counter = player.coyote_time
 	
-	if player.attack and can_attack and not player.is_attacking:
+	if player.attack and can_attack and not player.is_hitting and not player.is_attacking:
 		perform_attack()
-	if player.direction and not player.is_jumping and not player.is_attacking:
-		set_state(PLAYER_STATES.RUN)
+	
+	if player.direction and not player.is_jumping and not player.is_attacking and not player.is_hitting:
+		change_behaviour(player.PLAYER_STATES.RUN)
 		$"../anim".scale.x = player.direction
+	elif player.is_hitting:
+		change_behaviour(player.PLAYER_STATES.HIT)
+		await get_tree().create_timer(.2).timeout
+		player.is_hitting = false
+		change_behaviour(player.PLAYER_STATES.IDLE)
 	else:
 		handle_idle_state()
 
 func handle_idle_state():
 	player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED)
 	if not player.is_attacking and not player.is_jumping:
-		set_state(PLAYER_STATES.IDLE)
+		change_behaviour(player.PLAYER_STATES.IDLE)
 
 func handle_air_state(delta):
 	player.is_on_ground = false
@@ -72,48 +74,62 @@ func handle_air_state(delta):
 	if !player.is_on_ladder: # Apply gravity
 		player.velocity.y += player.gravity * delta
 
-	if player.attack and can_attack and not player.is_attacking:
+	if player.attack and can_attack and not player.is_attacking and not player.is_hitting:
 		perform_attack()
-	elif player.velocity.y > 0 and not player.is_attacking:
-		set_state(PLAYER_STATES.FALL)
+	elif player.velocity.y > 0 and not player.is_attacking and not player.is_hitting:
+		change_behaviour(player.PLAYER_STATES.FALL)
 		player.is_jumping = false
+	elif player.is_hitting:
+		change_behaviour(player.PLAYER_STATES.HIT)
+		await get_tree().create_timer(.2).timeout
+		player.is_hitting = false
+		change_behaviour(player.PLAYER_STATES.IDLE)
 
 func perform_attack():
-	set_state(PLAYER_STATES.ATTACK)
+	$"../FmodBankLoader/FmodEventEmitter2D".play()
+	
+	change_behaviour(player.PLAYER_STATES.ATTACK)
+	
 	$"../label_state".text = "Attack"
 	$"../anim".play("attack")
+	
 	player.is_attacking = true
 	can_attack = false
+	
 	$"../anim/attack_collider/CollisionShape2D".disabled = false
+	
 	await get_tree().create_timer(attack_cooldown).timeout
-	player.is_attacking = false
+	
 	$"../anim/attack_collider/CollisionShape2D".disabled = true
+	
+	player.is_attacking = false
 	can_attack = true
-	$"../FmodBankLoader/FmodEventEmitter2D".play()
+	
 
 func handle_state_actions():
-	match state:
-		PLAYER_STATES.IDLE:
+	match player.state:
+		player.PLAYER_STATES.IDLE:
 			$Idle.exec()
-		PLAYER_STATES.RUN:
+		player.PLAYER_STATES.RUN:
 			$Run.exec()
-		PLAYER_STATES.ATTACK:
+		player.PLAYER_STATES.HIT:
+			print(player.current_health)
+			$Hit.exec()
+		player.PLAYER_STATES.ATTACK:
 			$Attack.exec()
-		PLAYER_STATES.JUMP when player.is_on_floor():
+		player.PLAYER_STATES.JUMP when player.is_on_floor():
 			$Jump.exec()
-		PLAYER_STATES.FALL when !player.is_on_floor():
+		player.PLAYER_STATES.FALL when !player.is_on_floor():
 			$Fall.exec()
 
-func set_state(new_state: PLAYER_STATES):
-	state = new_state
 
-func change_behaviour(_state: PLAYER_STATES) -> void:
-	state = _state
-	prev_behavior = cur_state
+func change_behaviour(new_state) -> void:
+	player.previous_state = player.state
+	player.state = new_state
 
 
 func get_cur_state() -> String:
-	return cur_state.name
+	return player.state.name
 
 func get_player(_player):
 	player = _player

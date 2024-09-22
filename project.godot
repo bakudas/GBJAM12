@@ -31,6 +31,8 @@ DSP/dsp_buffer_count=4
 config/name="GBJAM12"
 run/main_scene="res://scenes/core.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
+run/max_fps=60
+boot_splash/use_filter=false
 config/icon="res://icon.svg"
 
 [autoload]
@@ -40,12 +42,13 @@ FmodManager="*res://addons/fmod/FmodManager.gd"
 
 [display]
 
-window/size/viewport_width=960
-window/size/viewport_height=864
+window/size/viewport_width=800
+window/size/viewport_height=720
+window/size/resizable=false
 window/stretch/mode="viewport"
 window/stretch/scale=5.0
 window/stretch/scale_mode="integer"
-window/per_pixel_transparency/allowed=true
+window/dpi/allow_hidpi=false
 window/vsync/vsync_mode=0
 
 [editor_plugins]
@@ -95,8 +98,18 @@ move_left={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="player"
+2d_physics/layer_2="enemies"
+2d_physics/layer_3="level"
+2d_physics/layer_4="props"
+2d_physics/layer_6="custom_data"
+2d_physics/layer_9="invisible_wall"
+
 [rendering]
 
-camera/depth_of_field/depth_of_field_bokeh_shape=0
+textures/canvas_textures/default_texture_filter=0
 anti_aliasing/screen_space_roughness_limiter/enabled=false
-2d/snap/snap_2d_transforms_to_pixel=true
+environment/volumetric_fog/use_filter=0
+environment/defaults/default_clear_color=Color(0.278431, 0.466667, 0.568627, 1)

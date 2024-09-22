@@ -1,34 +1,65 @@
-[gd_scene load_steps=4 format=3 uid="uid://ckq456hijsq6s"]
+[gd_scene load_steps=7 format=3 uid="uid://ckq456hijsq6s"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_630ur"]
 [ext_resource type="Script" path="res://scripts/enemy_behaviour_tree.gd" id="2_1cytr"]
+[ext_resource type="SpriteFrames" uid="uid://dmclt06slc6er" path="res://animations/enemy_big_eye_animations.tres" id="3_aici0"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_y8srq"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_h8f67"]
 
-[node name="Enemy" type="Node2D" groups=["enemies"]]
-script = ExtResource("1_630ur")
-damage_power = 10.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_m5y3h"]
+radius = 16.0
 
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
-collision_layer = 0
-collision_mask = 2
+[sub_resource type="CircleShape2D" id="CircleShape2D_8wkgf"]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatableBody2D"]
-animation = &""
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="AnimatableBody2D"]
-shape = SubResource("CircleShape2D_y8srq")
-
-[node name="hitbox" type="Area2D" parent="."]
+[node name="Enemy" type="CharacterBody2D"]
 texture_filter = 1
 collision_layer = 0
-collision_mask = 3
+collision_mask = 268
+velocity = Vector2(0, 1.45902e+06)
+platform_wall_layers = 12
+script = ExtResource("1_630ur")
+max_heath = 1.0
+damage_power = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
-shape = SubResource("CircleShape2D_y8srq")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("CircleShape2D_h8f67")
 
 [node name="BehaviourTree" type="Node" parent="."]
 script = ExtResource("2_1cytr")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("3_aici0")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.551284
+
+[node name="RayCast2D" type="RayCast2D" parent="AnimatedSprite2D"]
+target_position = Vector2(-90, 0)
+
+[node name="attack_area" type="Area2D" parent="AnimatedSprite2D" groups=["enemies"]]
+texture_filter = 1
+position = Vector2(-9, 0)
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/attack_area"]
+shape = SubResource("CircleShape2D_m5y3h")
+
+[node name="hitbox" type="Area2D" parent="." groups=["enemies"]]
+texture_filter = 1
+position = Vector2(0, 6)
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("CircleShape2D_8wkgf")
+
+[node name="DirectionTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="body_entered" from="AnimatedSprite2D/attack_area" to="." method="_on_attack_area_body_entered"]
+[connection signal="body_exited" from="AnimatedSprite2D/attack_area" to="." method="_on_attack_area_body_exited"]
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_timer_timeout"]

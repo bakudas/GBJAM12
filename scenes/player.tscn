@@ -1,15 +1,15 @@
-[gd_scene load_steps=31 format=3 uid="uid://o3fb7qjq66jl"]
+[gd_scene load_steps=15 format=3 uid="uid://o3fb7qjq66jl"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_qw6nv"]
-[ext_resource type="Texture2D" uid="uid://bn1st08sb56jf" path="res://texturas/npc.png" id="2_w3rss"]
 [ext_resource type="Script" path="res://scripts/PlayerBehaviourTree.gd" id="3_llqwf"]
 [ext_resource type="Script" path="res://scripts/Idle.gd" id="4_t6p0e"]
+[ext_resource type="Script" path="res://scripts/hit.gd" id="5_ei5nu"]
 [ext_resource type="Script" path="res://scripts/Run.gd" id="5_lfwcd"]
 [ext_resource type="Script" path="res://scripts/Jump.gd" id="6_slesn"]
 [ext_resource type="Script" path="res://scripts/Fall.gd" id="7_lyqy7"]
 [ext_resource type="Script" path="res://scripts/Attack.gd" id="7_vejmk"]
 [ext_resource type="Script" path="res://scripts/InputHandler.gd" id="8_srcfd"]
-[ext_resource type="Texture2D" uid="uid://b6yacmnxo50bn" path="res://texturas/npc-attack.png" id="9_rx1ha"]
+[ext_resource type="SpriteFrames" uid="uid://bwo4onsr4dxl1" path="res://animations/player_ananimations.tres" id="9_88glf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_628cl"]
 radius = 6.0
@@ -18,141 +18,16 @@ height = 28.0
 [sub_resource type="LabelSettings" id="LabelSettings_cb0jl"]
 font_size = 10
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_m7ume"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m7lly"]
-atlas = ExtResource("9_rx1ha")
-region = Rect2(0, 0, 48, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_75oi0"]
-atlas = ExtResource("9_rx1ha")
-region = Rect2(48, 0, 48, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j3ho8"]
-atlas = ExtResource("2_w3rss")
-region = Rect2(110, 0, 22, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cuopv"]
-atlas = ExtResource("2_w3rss")
-region = Rect2(132, 0, 22, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ie2nr"]
-atlas = ExtResource("2_w3rss")
-region = Rect2(154, 0, 22, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i513y"]
-atlas = ExtResource("2_w3rss")
-region = Rect2(176, 0, 22, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5wpp8"]
-atlas = ExtResource("2_w3rss")
-region = Rect2(44, 0, 22, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gbwfk"]
-atlas = ExtResource("2_w3rss")
-region = Rect2(66, 0, 22, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rggyg"]
-atlas = ExtResource("2_w3rss")
-region = Rect2(88, 0, 22, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wylfq"]
-atlas = ExtResource("2_w3rss")
-region = Rect2(198, 0, 22, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ksy75"]
-atlas = ExtResource("2_w3rss")
-region = Rect2(220, 0, 22, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_blw2a"]
-atlas = ExtResource("2_w3rss")
-region = Rect2(242, 0, 22, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_poclw"]
-atlas = ExtResource("2_w3rss")
-region = Rect2(264, 0, 22, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e2efh"]
-atlas = ExtResource("2_w3rss")
-region = Rect2(286, 0, 22, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qmm3p"]
-atlas = ExtResource("2_w3rss")
-region = Rect2(308, 0, 22, 30)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_e8n1e"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m7lly")
-}, {
-"duration": 2.0,
-"texture": SubResource("AtlasTexture_75oi0")
-}],
-"loop": false,
-"name": &"attack",
-"speed": 8.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_j3ho8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cuopv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ie2nr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_i513y")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 8.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5wpp8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gbwfk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rggyg")
-}],
-"loop": true,
-"name": &"jump",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wylfq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ksy75")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_blw2a")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_poclw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e2efh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qmm3p")
-}],
-"loop": true,
-"name": &"run",
-"speed": 12.0
-}]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tu44p"]
+size = Vector2(15, 20)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fn6q6"]
 radius = 15.0
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 texture_filter = 1
+collision_mask = 7
+floor_stop_on_slope = false
 script = ExtResource("1_qw6nv")
 max_heath = 5.0
 
@@ -167,6 +42,9 @@ script = ExtResource("4_t6p0e")
 
 [node name="Run" type="Node" parent="PlayerBehaviourTree"]
 script = ExtResource("5_lfwcd")
+
+[node name="Hit" type="Node" parent="PlayerBehaviourTree"]
+script = ExtResource("5_ei5nu")
 
 [node name="Jump" type="Node" parent="PlayerBehaviourTree"]
 script = ExtResource("6_slesn")
@@ -192,27 +70,25 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ladder_collider" type="Area2D" parent="." groups=["player"]]
-collision_layer = 0
+collision_layer = 32
 collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ladder_collider"]
-shape = SubResource("RectangleShape2D_m7ume")
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_tu44p")
 debug_color = Color(0, 0.637131, 0.396068, 0.42)
 
 [node name="anim" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_e8n1e")
-animation = &"idle"
+sprite_frames = ExtResource("9_88glf")
+animation = &"hit"
 autoplay = "idle"
-frame = 1
-frame_progress = 0.584491
 
-[node name="attack_collider" type="Area2D" parent="anim"]
-position = Vector2(12, 2)
-collision_layer = 2
-collision_mask = 2
-monitoring = false
+[node name="attack_collider" type="Area2D" parent="anim" groups=["player"]]
+position = Vector2(10, 0)
+collision_layer = 10
+collision_mask = 10
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="anim/attack_collider"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="anim/attack_collider" groups=["player"]]
 shape = SubResource("CircleShape2D_fn6q6")
 disabled = true
 debug_color = Color(0.974621, 0.155203, 0.083399, 0.42)
@@ -225,6 +101,8 @@ bank_paths = ["res://audio/Master.bank"]
 [node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="FmodBankLoader"]
 event_name = "event:/New Event"
 event_guid = "{238d3a72-448d-4b8a-ba84-a78aeb0b65f2}"
+allow_fadeout = false
+preload_event = false
 "event_parameter/Parameter 1/id" = -3653676464301237023
 "event_parameter/Parameter 1/value" = 0.0
 "event_parameter/Parameter 1/min_value" = 0.0

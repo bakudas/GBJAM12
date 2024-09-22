@@ -1,30 +1,40 @@
 class_name EnemyData
 
-## PROPERTIES
-#@export_category("Basic Enemy Settings")
-#
-#@export_group("Stats")
-#@export_range(1.0, 10.0, 1.0) var max_heath:float
-#@export_range(1.0, 100.0, 1.0) var damage_power:float
-#
-#@export_group("Visual")
-#@export var animation_frames:SpriteFrames
-#
-#@export_group("FX")
-#
-#@export_group("Audio")
-
 const Database = {
 	"Big Eye": {
 		"sprite": "res://animations/enemy_big_eye_animations.tres",
 		"max_health": 1,
 		"damage_power": 1,
-		"fliped": false
+		"fliped": false,
+		"air_type": true,
+		"speed_h": 20,
+		"death_time": 0.25,
 	},
 	"Cursed Bat": {
 		"sprite": "res://animations/enemy_cursed_bat_animations.tres",
 		"max_health": 1,
 		"damage_power": 1,
-		"fliped": true
+		"fliped": true,
+		"air_type": true,
+		"speed_h": 40,
+		"death_time": 0.25,
+	},
+	"Skeleton Melee": {
+		"sprite": "res://animations/enemy_skeleton_animations.tres",
+		"max_health": 1,
+		"damage_power": 1,
+		"fliped": true,
+		"air_type": false,
+		"speed_h": 20,
+		"death_time": 0.4,
+	},
+	"Spike Ball": {
+		"sprite": "res://animations/enemy_spike_ball_animations.tres",
+		"max_health": 1,
+		"damage_power": 1,
+		"fliped": true,
+		"air_type": false,
+		"speed_h": 10,
+		"death_time": 0.25,
 	},
 }

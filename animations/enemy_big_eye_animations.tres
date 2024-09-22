@@ -1,6 +1,10 @@
-[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://dmclt06slc6er"]
+[gd_resource type="SpriteFrames" load_steps=9 format=3 uid="uid://dmclt06slc6er"]
 
 [ext_resource type="Texture2D" uid="uid://ctc5gs7537l8o" path="res://texturas/enemy_big_eye.png" id="1_3y0g7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nin4q"]
+atlas = ExtResource("1_3y0g7")
+region = Rect2(0, 0, 30, 31)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8obou"]
 atlas = ExtResource("1_3y0g7")
@@ -22,8 +26,20 @@ region = Rect2(60, 0, 30, 31)
 atlas = ExtResource("1_3y0g7")
 region = Rect2(0, 0, 30, 31)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_gvuwm"]
+atlas = ExtResource("1_3y0g7")
+region = Rect2(0, 0, 30, 31)
+
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nin4q")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 17.0
+}, {
 "frames": [{
 "duration": 1.5,
 "texture": SubResource("AtlasTexture_8obou")
@@ -52,5 +68,13 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gvuwm")
+}],
+"loop": true,
+"name": &"patrol",
 "speed": 5.0
 }]

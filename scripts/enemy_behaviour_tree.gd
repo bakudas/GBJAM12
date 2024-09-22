@@ -22,23 +22,30 @@ func handling_states() -> void:
 
 
 func perform_idle_state() -> void:
-	$"../AnimatableBody2D/AnimatedSprite2D".play("hit")
+	$"../AnimatedSprite2D".play("hit")
 	await get_tree().create_timer(.25).timeout
-	$"../AnimatableBody2D/AnimatedSprite2D".play("idle")
+	$"../AnimatedSprite2D".play("idle")
 	
 
 func perform_attack_state() -> void:
-	pass
+	$"../AnimatedSprite2D".play("attack")
+	await get_tree().create_timer(.3).timeout
+	if !enemy.player_in_area:
+		enemy.is_dealing_damage = false
 
 
 func perform_death_state() -> void:
-	$"../AnimatableBody2D/AnimatedSprite2D".play("death")
+	$"../hitbox".monitoring = false
+	$"../AnimatedSprite2D".play("death")
+	await get_tree().create_timer(.3).timeout
+	$"../AnimatedSprite2D".stop()
+	$"../AnimatedSprite2D".set_frame_and_progress(4, 0.0)
 	
 
 
 func perform_hit_state() -> void:
-	$"../AnimatableBody2D/AnimatedSprite2D".play("idle")
+	$"../AnimatedSprite2D".play("idle")
 
 
 func perform_patrol_state() -> void:
-	pass
+	$"../AnimatedSprite2D".play("patrol")

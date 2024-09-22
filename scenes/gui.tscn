@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=3 uid="uid://bemwl2jn6o5vm"]
+
+[ext_resource type="Texture2D" uid="uid://bgomi6ams0kou" path="res://texturas/ui_life_text.png" id="1_bmntg"]
+[ext_resource type="Texture2D" uid="uid://cxska1h17j7m6" path="res://texturas/ui_mid_body.png" id="2_85mpg"]
+[ext_resource type="Texture2D" uid="uid://lrkvyaox5mft" path="res://texturas/ui_life_end_right.png" id="3_1rdsk"]
+[ext_resource type="Texture2D" uid="uid://ct13mch2sjij2" path="res://texturas/ui_end_right.png" id="4_ukmom"]
+
+[node name="GUI" type="Control"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -16.175
+offset_bottom = 63.825
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 16.0
+pivot_offset = Vector2(0, 16)
+color = Color(0.145098, 0.12549, 0.298039, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 16.0
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_bmntg")
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_85mpg")
+
+[node name="TextureRect3" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_85mpg")
+
+[node name="TextureRect5" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_85mpg")
+
+[node name="TextureRect6" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_1rdsk")
+
+[node name="TextureRect4" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_85mpg")
+
+[node name="TextureRect7" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_85mpg")
+
+[node name="TextureRect8" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_85mpg")
+
+[node name="TextureRect13" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_ukmom")
