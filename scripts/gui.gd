@@ -4,11 +4,16 @@ extends Control
 var health_list = []
 var health
 
+
+func _init() -> void:
+	GameManager.gui = self
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	health_list = $HBoxContainer2.get_children()
+	GameManager.gui_health = health_list.size()
+	
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	health = GameManager.gui_health

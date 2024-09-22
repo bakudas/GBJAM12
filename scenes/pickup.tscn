@@ -82,7 +82,7 @@ position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_6g4ik")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.248619
+frame_progress = 0.582125
 
 [node name="hitbox" type="Area2D" parent="."]
 collision_layer = 16

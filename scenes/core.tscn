@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=4 uid="uid://ryt5kgwteadw"]
+[gd_scene load_steps=8 format=4 uid="uid://ryt5kgwteadw"]
 
 [ext_resource type="PackedScene" uid="uid://o3fb7qjq66jl" path="res://scenes/player.tscn" id="1_t4235"]
-[ext_resource type="Script" path="res://scripts/GM.gd" id="2_obx8a"]
 [ext_resource type="TileSet" uid="uid://ds7omu6q5u47p" path="res://scenes/tileset01.tres" id="2_uifou"]
 [ext_resource type="PackedScene" uid="uid://ckq456hijsq6s" path="res://scenes/enemy.tscn" id="4_olq3t"]
 [ext_resource type="PackedScene" uid="uid://cfrxhdbbd14tp" path="res://scenes/props.tscn" id="5_kjpf7"]
@@ -375,22 +374,27 @@ enemy_name = "Cursed Bat"
 [node name="Enemy58" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(1384, 224)
 enemy_name = "Spike Ball"
+max_heath = 1.0
 
 [node name="Enemy59" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(1288, 352)
 enemy_name = "Spike Ball"
+max_heath = 1.0
 
 [node name="Enemy60" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(1416, 352)
 enemy_name = "Spike Ball"
+max_heath = 1.0
 
 [node name="Enemy61" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(1536, 352)
 enemy_name = "Spike Ball"
+max_heath = 1.0
 
 [node name="Enemy57" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(1753, 224)
 enemy_name = "Spike Ball"
+max_heath = 1.0
 
 [node name="Enemy14" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(1666, 500)
@@ -426,26 +430,32 @@ enemy_name = "Cursed Bat"
 [node name="Enemy66" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(2232, 112)
 enemy_name = "Spike Ball"
+max_heath = 1.0
 
 [node name="Enemy67" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(2264, 112)
 enemy_name = "Spike Ball"
+max_heath = 1.0
 
 [node name="Enemy68" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(2311, 112)
 enemy_name = "Skeleton Melee"
+max_heath = 3.0
 
 [node name="Enemy69" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(1952, 224)
 enemy_name = "Skeleton Melee"
+max_heath = 3.0
 
 [node name="Enemy70" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(1681, 224)
 enemy_name = "Skeleton Melee"
+max_heath = 3.0
 
 [node name="Enemy71" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(1472, 352)
 enemy_name = "Skeleton Melee"
+max_heath = 3.0
 
 [node name="Enemy64" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(2696, 120)
@@ -493,42 +503,52 @@ position = Vector2(1630, 272)
 [node name="Enemy42" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(3401, 32)
 enemy_name = "Spike Ball"
+max_heath = 1.0
 
 [node name="Enemy49" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(3352, 32)
 enemy_name = "Spike Ball"
+max_heath = 1.0
 
 [node name="Enemy43" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(3301, -16)
 enemy_name = "Skeleton Melee"
+max_heath = 3.0
 
 [node name="Enemy44" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(3367, -16)
 enemy_name = "Skeleton Melee"
+max_heath = 3.0
 
 [node name="Enemy50" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(3408, -160)
 enemy_name = "Skeleton Melee"
+max_heath = 3.0
 
 [node name="Enemy51" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(3800, -160)
 enemy_name = "Skeleton Melee"
+max_heath = 3.0
 
 [node name="Enemy52" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(3872, -160)
 enemy_name = "Skeleton Melee"
+max_heath = 3.0
 
 [node name="Enemy53" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(4072, -160)
 enemy_name = "Skeleton Melee"
+max_heath = 3.0
 
 [node name="Enemy45" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(3401, -64)
 enemy_name = "Spike Ball"
+max_heath = 1.0
 
 [node name="Enemy46" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(3312, -64)
 enemy_name = "Spike Ball"
+max_heath = 1.0
 
 [node name="Enemy47" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(3376, -112)
@@ -546,14 +566,17 @@ enemy_name = "Cursed Bat"
 [node name="Enemy41" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(467, 257)
 enemy_name = "Skeleton Melee"
+max_heath = 3.0
 
 [node name="Enemy55" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(424, 257)
 enemy_name = "Skeleton Melee"
+max_heath = 3.0
 
 [node name="Enemy62" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(200, 256)
 enemy_name = "Skeleton Melee"
+max_heath = 3.0
 
 [node name="Enemy8" parent="Enemies" instance=ExtResource("4_olq3t")]
 position = Vector2(881, 256)
@@ -607,7 +630,7 @@ position = Vector2(4021, 510)
 enemy_name = "Cursed Bat"
 
 [node name="player" parent="." instance=ExtResource("1_t4235")]
-position = Vector2(5664, -536)
+position = Vector2(-224, 237)
 metadata/_edit_group_ = true
 
 [node name="Camera2D" type="Camera2D" parent="player"]
@@ -626,8 +649,3 @@ editor_draw_drag_margin = true
 [node name="BossBaratao" type="Sprite2D" parent="."]
 position = Vector2(6184, -504)
 texture = ExtResource("7_8wmcu")
-
-[node name="GM" type="Node" parent="."]
-script = ExtResource("2_obx8a")
-
-[connection signal="start" from="player" to="GM" method="get_player"]

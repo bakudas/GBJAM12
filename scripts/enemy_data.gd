@@ -3,7 +3,7 @@ class_name EnemyData
 const Database = {
 	"Big Eye": {
 		"sprite": "res://animations/enemy_big_eye_animations.tres",
-		"max_health": 1,
+		"max_health": 2,
 		"damage_power": 1,
 		"fliped": false,
 		"air_type": true,
@@ -12,7 +12,7 @@ const Database = {
 	},
 	"Cursed Bat": {
 		"sprite": "res://animations/enemy_cursed_bat_animations.tres",
-		"max_health": 1,
+		"max_health": 2,
 		"damage_power": 1,
 		"fliped": true,
 		"air_type": true,
@@ -21,7 +21,7 @@ const Database = {
 	},
 	"Skeleton Melee": {
 		"sprite": "res://animations/enemy_skeleton_animations.tres",
-		"max_health": 1,
+		"max_health": 3,
 		"damage_power": 1,
 		"fliped": true,
 		"air_type": false,

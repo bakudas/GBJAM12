@@ -1,0 +1,134 @@
+[gd_scene load_steps=19 format=3 uid="uid://cpuvpaoy1oia6"]
+
+[ext_resource type="Script" path="res://scripts/cutscene_01.gd" id="1_1fhxg"]
+[ext_resource type="PackedScene" uid="uid://ryt5kgwteadw" path="res://scenes/core.tscn" id="2_vyf1p"]
+[ext_resource type="Texture2D" uid="uid://cj1fij44ibhuo" path="res://texturas/cutscene01.png" id="3_707fr"]
+[ext_resource type="Texture2D" uid="uid://chqlqyosovf2x" path="res://texturas/menu_screen.png" id="3_qfwyl"]
+[ext_resource type="FontFile" uid="uid://dyaakcp5x3y2v" path="res://fonts/Spencers Spooky Font/SpencersSpookyFont.ttf" id="4_pt5s1"]
+[ext_resource type="FontFile" uid="uid://cnx0jvo1ygvus" path="res://fonts/Spencers Tower Font/SpencersTowerMONO.ttf" id="5_vf336"]
+[ext_resource type="Texture2D" uid="uid://df27vbwqopvea" path="res://texturas/ui_confirm_dialog.png" id="6_fhwax"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kekls"]
+atlas = ExtResource("3_707fr")
+region = Rect2(0, 0, 160, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6i00"]
+atlas = ExtResource("3_qfwyl")
+region = Rect2(0, 0, 160, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bon6b"]
+atlas = ExtResource("3_qfwyl")
+region = Rect2(160, 0, 160, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_plgc2"]
+atlas = ExtResource("3_qfwyl")
+region = Rect2(320, 0, 160, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtytl"]
+atlas = ExtResource("3_qfwyl")
+region = Rect2(480, 0, 160, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amok4"]
+atlas = ExtResource("3_qfwyl")
+region = Rect2(640, 0, 160, 144)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a38cr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kekls")
+}],
+"loop": true,
+"name": &"cutscene01",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6i00")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bon6b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_plgc2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wtytl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amok4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7n7qf"]
+atlas = ExtResource("6_fhwax")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0gl8"]
+atlas = ExtResource("6_fhwax")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxaae"]
+atlas = ExtResource("6_fhwax")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jsln0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7n7qf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x0gl8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fxaae")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="Cutscene" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_1fhxg")
+next_scene = ExtResource("2_vyf1p")
+
+[node name="scene" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_a38cr")
+animation = &"cutscene01"
+autoplay = "default"
+centered = false
+
+[node name="title" type="Label" parent="."]
+layout_mode = 0
+offset_top = 14.0
+offset_right = 160.0
+offset_bottom = 27.0
+theme_override_fonts/font = ExtResource("4_pt5s1")
+text = "Ritual Cave"
+horizontal_alignment = 1
+
+[node name="dialog_confirm" type="AnimatedSprite2D" parent="."]
+position = Vector2(152, 136)
+sprite_frames = SubResource("SpriteFrames_jsln0")
+autoplay = "default"
+frame_progress = 0.804499
+
+[node name="dialog" type="Label" parent="."]
+layout_mode = 0
+offset_top = 86.0
+offset_right = 160.0
+offset_bottom = 139.0
+theme_override_fonts/font = ExtResource("5_vf336")
+theme_override_font_sizes/font_size = 15
+text = "The first fragment of the 
+portal awaits in the depths 
+of this cursed woodland."
+horizontal_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0

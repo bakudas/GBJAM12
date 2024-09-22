@@ -5,7 +5,7 @@ class_name BehaviourTree
 @onready var player = $".."
 @export var disable : bool = false
 @onready var NODE_STATES = get_children()
-var attack_cooldown: float = 0.20
+var attack_cooldown: float = 0.15
 var can_attack: bool = true
 
 func _ready():
@@ -51,6 +51,7 @@ func handle_ground_state():
 	
 	if player.direction and not player.is_jumping and not player.is_attacking and not player.is_hitting:
 		change_behaviour(player.PLAYER_STATES.RUN)
+		player.attack_dir = player.direction
 		$"../anim".scale.x = player.direction
 	elif player.is_hitting:
 		change_behaviour(player.PLAYER_STATES.HIT)
@@ -113,7 +114,6 @@ func handle_state_actions():
 		player.PLAYER_STATES.RUN:
 			$Run.exec()
 		player.PLAYER_STATES.HIT:
-			print(player.current_health)
 			$Hit.exec()
 		player.PLAYER_STATES.ATTACK:
 			$Attack.exec()

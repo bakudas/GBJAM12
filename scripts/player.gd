@@ -34,11 +34,18 @@ var coyote_time_counter = 0.0
 var direction:float
 var attack:bool = false
 var jump_pressed = false
+var attack_power:float = 1.0
+var attack_dir:float
+
+
+func _init() -> void:
+	GameManager.player = self
 
 
 func _ready():
 	emit_signal("start", self)
 	current_health = max_heath
+	GameManager.player_health = current_health
 
 
 func _process(delta: float) -> void:
@@ -52,12 +59,13 @@ func _physics_process(delta):
 
 func receive_damage(amount:float=1):
 	current_health = clamp(current_health - amount, 0, max_heath)
+	GameManager.player_health = current_health
 	is_hitting = true
 
 
 func recovery_health(amount:float=1):
 	current_health = clamp(current_health + amount, 0, max_heath)
-	print(current_health)
+	GameManager.player_health = current_health
 
 
 func knockback():
@@ -72,19 +80,14 @@ func _on_area_2d_body_shape_entered(body_rid: RID, body: Node2D, body_shape_inde
 		var is_on_one_way_platform = body.get_cell_tile_data(tile_coords).get_custom_data_by_layer_id(2) # custom data layer #1
 		
 		if is_death:
-			print("MOREU!")
 			get_tree().reload_current_scene()
 		elif is_on_ladder:
-			if Input.is_action_pressed("climb"):
-				is_on_ladder = true
-				velocity.y -= 10
-				print("VAI SOBE!")
+			pass # TODO climb over the ladder
 		elif is_on_one_way_platform:
-			print("VAI DESCe!")
+			pass # TODO jump down over the one way platform
 
 
 func _on_ladder_collider_area_entered(area: Area2D) -> void:
-	
 	if area.get_parent().has_method("destroy"):
 		area.get_parent().destroy()
 	recovery_health(1)

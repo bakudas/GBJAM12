@@ -42,6 +42,7 @@ var is_dealing_damage:bool = false
 var taking_damage:bool = false
 var is_roaming:bool = false
 var is_flying:bool = false
+var is_hitting:bool = false
 var speed_h:float = 40
 var dir:Vector2 = Vector2(1, 0)
 var knockback_force:float
@@ -51,15 +52,15 @@ var death_time:float
 
 
 func _ready() -> void:
-	current_health = max_heath
 	# Setup enemy base on enemy name in EnemyData database
 	speed_h = EnemyData.Database[enemy_name].speed_h
-	max_heath = EnemyData.Database[enemy_name].max_health
 	damage_power = EnemyData.Database[enemy_name].damage_power
 	is_flying = EnemyData.Database[enemy_name].air_type
 	death_time = EnemyData.Database[enemy_name].death_time
 	$AnimatedSprite2D.flip_h = EnemyData.Database[enemy_name].fliped
 	var sprite_frames = load(EnemyData.Database[enemy_name].sprite)
+	max_heath = EnemyData.Database[enemy_name].max_health
+	current_health = max_heath
 	
 	if sprite_frames != null:
 		$AnimatedSprite2D.sprite_frames = sprite_frames
@@ -121,19 +122,9 @@ func _get_configuration_warnings():
 		return []
 
 
-func receive_damage(cur_health, type, amount:float=1) -> float:
-		var new_health:float
-		new_health = clamp(cur_health - amount, 0, max_heath)
-		return new_health
-
-
-func apply_damage(type, amount:float=1):
-		pass
-
-
-func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("player"):
-		current_health = receive_damage(current_health, implements.DAMAGE_TYPE.NORMAL)
+func receive_damage(amount:float=1) -> void:
+		current_health = clamp(current_health - amount, 0, max_heath)
+		is_hitting = true
 		
 		if current_health <= 0:
 			is_dead = true
@@ -142,11 +133,21 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 			if !enemy_name == "Skeleton Melee":
 				await get_tree().create_timer(death_time).timeout
 				queue_free()
-				
 		else:
 			enemy_state = STATES.HIT
 			await get_tree().create_timer(.25).timeout
+			is_hitting = false
 			enemy_state = STATES.IDLE
+
+
+func apply_damage(type, amount:float=1):
+		pass
+
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("player") and !is_hitting:
+		receive_damage(area.get_owner().attack_power)
+		velocity.x = 25.0 * area.get_owner().attack_dir
 
 
 func _on_hitbox_body_entered(body: Node2D) -> void:

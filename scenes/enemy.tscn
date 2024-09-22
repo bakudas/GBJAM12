@@ -18,7 +18,7 @@ collision_mask = 268
 velocity = Vector2(0, 1.45902e+06)
 platform_wall_layers = 12
 script = ExtResource("1_630ur")
-max_heath = 1.0
+max_heath = 2.0
 damage_power = 1.0
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
@@ -32,7 +32,7 @@ script = ExtResource("2_1cytr")
 sprite_frames = ExtResource("3_aici0")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.0684558
+frame_progress = 0.0229509
 
 [node name="RayCast2D" type="RayCast2D" parent="AnimatedSprite2D"]
 target_position = Vector2(-90, 0)
